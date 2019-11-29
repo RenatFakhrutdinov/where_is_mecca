@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
@@ -36,8 +37,13 @@ class _CompassScreenState extends State<CompassScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(height: ScreenUtil.getInstance().setHeight(200)),
-                    _compass(),
-                    Text(AppLocation.localName)
+                    Container(
+                        height: ScreenUtil.getInstance().setHeight(600),
+                        child: _compass()),
+                    Container(
+                      height: ScreenUtil.getInstance().setHeight(200),
+                      child: Center(child: Text(AppLocation.localName)),
+                    )
                   ],
                 ),
                 replacement: Center(
@@ -50,7 +56,7 @@ class _CompassScreenState extends State<CompassScreen> {
 
   Widget _compass() {
     return Center(
-      child: Text("Where is Mecca?"),
+      child: SvgPicture.asset('images/compass.svg'),
     );
   }
 }
