@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:where_is_mecca/bloc/location_bloc/location.dart';
+import 'package:where_is_mecca/bloc/location_bloc/location_export.dart';
+import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
 
 class CompassScreen extends StatefulWidget {
@@ -32,20 +34,50 @@ class _CompassScreenState extends State<CompassScreen> {
             } else
               return Visibility(
                 visible: snapshot.data,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(height: ScreenUtil.getInstance().setHeight(200)),
-                    Container(
-                        height: ScreenUtil.getInstance().setHeight(600),
-                        child: _compass()),
-                    Container(
-                      height: ScreenUtil.getInstance().setHeight(200),
-                      child: Center(child: Text(AppLocation.localName)),
-                    )
-                  ],
-                ),
+                child: BlocBuilder(
+                    bloc: BlocProvider.of<LocationBloc>(context),
+                    builder: (context, state) {
+                      if (state is LocationStateInit) {
+                        return Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      } else if (state is LocationStateDefined) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                                height:
+                                    ScreenUtil.getInstance().setHeight(200)),
+                            Container(
+                                height: ScreenUtil.getInstance().setHeight(600),
+                                child: _compass()),
+                            Container(
+                              height: ScreenUtil.getInstance().setHeight(200),
+                              child: Center(child: Text(AppLocation.localName)),
+                            )
+                          ],
+                        );
+                      } else
+                        return Center(
+                          child: Text(AppLocalizations.of(context).error),
+                        );
+
+                      /*return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SizedBox(height: ScreenUtil.getInstance().setHeight(200)),
+                        Container(
+                            height: ScreenUtil.getInstance().setHeight(600),
+                            child: _compass()),
+                        Container(
+                          height: ScreenUtil.getInstance().setHeight(200),
+                          child: Center(child: Text(AppLocation.localName)),
+                        )
+                      ],
+                    );*/
+                    }),
                 replacement: Center(
                     child: Text(AppLocalizations.of(context).noLocation,
                         textAlign: TextAlign.center)),

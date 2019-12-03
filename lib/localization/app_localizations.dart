@@ -15,14 +15,16 @@ class AppLocalizations {
       'noInternet':
           'Network connection unavailable. Please check that you have a data connection and try again.',
       'noLocation': 'Turn on device location please',
-      'horizontal': 'Please put your device in horizontal position'
+      'horizontal': 'Please put your device in horizontal position',
+      'error': 'Something went wrong'
     },
     'es': {
       'title': '¿Dónde está la Meca?',
       'noInternet':
           'Conexión de red no disponible. Compruebe que tiene una conexión de datos e intente nuevamente.',
       'noLocation': 'Encienda la ubicación del dispositivo por favor',
-      'horizontal': 'Por favor coloque su dispositivo en posición horizontal'
+      'horizontal': 'Por favor coloque su dispositivo en posición horizontal',
+      'error': 'Ha ocurrido un error'
     },
     'ru': {
       'title': 'Где Мекка?',
@@ -30,7 +32,8 @@ class AppLocalizations {
           'Сетевое подключение недоступно. Проверьте своё подключение к данным и повторите попытку.',
       'noLocation': 'Включите доступ к геоданным, пожалуйста.',
       'horizontal':
-          'Пожалуйста, поместите ваше устройство в горизонтальное положение'
+          'Пожалуйста, поместите ваше устройство в горизонтальное положение',
+      'error': 'Что-то пошло не так'
     }
   };
 
@@ -38,4 +41,5 @@ class AppLocalizations {
   String get noInternet => _localizedValues[locale.languageCode]['noInternet'];
   String get noLocation => _localizedValues[locale.languageCode]['noLocation'];
   String get horizontal => _localizedValues[locale.languageCode]['horizontal'];
+  String get error => _localizedValues[locale.languageCode]['error'];
 }

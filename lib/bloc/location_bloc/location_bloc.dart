@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:where_is_mecca/bloc/location_bloc/location.dart';
+import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
+
+import 'location_bloc_state.dart';
 
 enum LocationEvent { fetchLocation }
-
-enum LocationState { locationInitialized, locationError, locationDefined }
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final BuildContext context;
@@ -12,7 +12,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationBloc(this.context);
 
   @override
-  LocationState get initialState => LocationState.locationInitialized;
+  LocationState get initialState => LocationStateInit();
 
   @override
   Stream<LocationState> mapEventToState(LocationEvent event) async* {
@@ -23,13 +23,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           if (AppLocation.position != null) {
             print(
                 'current location \n latitude: ${AppLocation.latitude}\n longitude: ${AppLocation.longitude}');
-            yield LocationState.locationDefined;
+            yield LocationStateDefined(AppLocation.localName);
           } else
-            yield LocationState.locationError;
+            yield LocationStateError();
           break;
         } catch (e) {
           print(e);
-          yield LocationState.locationError;
+          yield LocationStateError();
           break;
         }
     }
