@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sensors/sensors.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_export.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
@@ -43,6 +43,7 @@ class _CompassScreenState extends State<CompassScreen> {
                         );
                       } else if (state is LocationStateDefined) {
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -62,21 +63,6 @@ class _CompassScreenState extends State<CompassScreen> {
                         return Center(
                           child: Text(AppLocalizations.of(context).error),
                         );
-
-                      /*return Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(height: ScreenUtil.getInstance().setHeight(200)),
-                        Container(
-                            height: ScreenUtil.getInstance().setHeight(600),
-                            child: _compass()),
-                        Container(
-                          height: ScreenUtil.getInstance().setHeight(200),
-                          child: Center(child: Text(AppLocation.localName)),
-                        )
-                      ],
-                    );*/
                     }),
                 replacement: Center(
                     child: Text(AppLocalizations.of(context).noLocation,
@@ -87,8 +73,23 @@ class _CompassScreenState extends State<CompassScreen> {
   }
 
   Widget _compass() {
-    return Center(
-      child: SvgPicture.asset('images/compass.svg'),
-    );
+    return StreamBuilder(
+        stream: accelerometerEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.z > 3 || snapshot.data.z < -3) {
+              return Text('${snapshot.data.z}');
+            } else
+              return Center(
+                child: Text(
+                  AppLocalizations.of(context).horizontal,
+                  textAlign: TextAlign.center,
+                ),
+              );
+          } else
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
+        });
   }
 }
