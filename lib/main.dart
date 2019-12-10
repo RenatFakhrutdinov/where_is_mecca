@@ -21,6 +21,7 @@ void main() {
         theme: ThemeData(
             primaryColor: AppColors.neutral,
             highlightColor: Colors.transparent,
+            fontFamily: 'Ubuntu',
             textTheme: TextTheme(
                 body1: TextStyle(
                   color: Colors.black54,

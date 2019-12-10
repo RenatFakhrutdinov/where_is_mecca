@@ -7,6 +7,7 @@ import 'package:sensors/sensors.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_export.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
+import 'package:where_is_mecca/res/quibla_icons.dart';
 
 class CompassScreen extends StatefulWidget {
   @override
@@ -78,13 +79,16 @@ class _CompassScreenState extends State<CompassScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.z > 3 || snapshot.data.z < -3) {
-              return Text('${snapshot.data.z}');
+              return Column(
+                children: <Widget>[
+                  Text('${snapshot.data.z}'),
+                  Icon(QiblaIcons.kaaba)
+                ],
+              );
             } else
-              return Center(
-                child: Text(
-                  AppLocalizations.of(context).horizontal,
-                  textAlign: TextAlign.center,
-                ),
+              return Text(
+                AppLocalizations.of(context).horizontal,
+                textAlign: TextAlign.center,
               );
           } else
             return Center(

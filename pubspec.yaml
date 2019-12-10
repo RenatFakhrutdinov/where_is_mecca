@@ -30,5 +30,15 @@ flutter:
 
   uses-material-design: true
 
+  fonts:
+    - family:  QiblaIcons
+      fonts:
+          - asset: fonts/icons.ttf
+
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu-Regular.ttf
+        - asset: fonts/Ubuntu-Bold.ttf
+
   assets:
     - images/
