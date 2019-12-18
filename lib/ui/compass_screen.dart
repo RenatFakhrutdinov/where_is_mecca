@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sensors/sensors.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_export.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
-import 'package:where_is_mecca/res/quibla_icons.dart';
 
 class CompassScreen extends StatefulWidget {
   @override
@@ -79,12 +79,15 @@ class _CompassScreenState extends State<CompassScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.z > 3 || snapshot.data.z < -3) {
-              return Column(
-                children: <Widget>[
-                  Text('${snapshot.data.z}'),
-                  Icon(QiblaIcons.kaaba)
-                ],
-              );
+              return StreamBuilder(
+                  stream: FlutterCompass.events,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(AppLocalizations.of(context).error);
+                    }
+                    //todo draw compass
+                    return Text("${snapshot.data}");
+                  });
             } else
               return Text(
                 AppLocalizations.of(context).horizontal,
