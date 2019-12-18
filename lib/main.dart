@@ -8,6 +8,7 @@ import 'package:where_is_mecca/res/AppColors.dart';
 import 'package:where_is_mecca/ui/compass_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MultiBlocProvider(
