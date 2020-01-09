@@ -4,7 +4,7 @@ Find Qibla, wherever you are. This application shows the direction to Mecca.
 
 Features:
 
-• define your location;
+• define your location
 
 • shows the direction to the North
 
