@@ -1,13 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sensors/sensors.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_export.dart';
 import 'package:where_is_mecca/bloc/location_bloc/location_logic.dart';
 import 'package:where_is_mecca/localization/app_localizations.dart';
+import 'package:where_is_mecca/res/quibla_icons.dart';
 
 class CompassScreen extends StatefulWidget {
   @override
@@ -45,7 +49,7 @@ class _CompassScreenState extends State<CompassScreen> {
                       } else if (state is LocationStateDefined) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             SizedBox(
@@ -85,8 +89,53 @@ class _CompassScreenState extends State<CompassScreen> {
                     if (snapshot.hasError) {
                       return Text(AppLocalizations.of(context).error);
                     }
-                    //todo draw compass
-                    return Text("${snapshot.data}");
+                    return Stack(
+                      children: <Widget>[
+                        Center(
+                          child: Column(
+                            children: <Widget>[
+                              Transform.rotate(
+                                angle: ((snapshot.data ?? 0) * (pi / 180) * -1),
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                        height: ScreenUtil.getInstance()
+                                            .setHeight(100)),
+                                    SvgPicture.asset('images/compass.svg',
+                                        height: ScreenUtil.getInstance()
+                                            .setHeight(400)),
+                                    SizedBox(
+                                        height: ScreenUtil.getInstance()
+                                            .setHeight(100)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Center(
+                          child: Transform.rotate(
+                            angle: (((snapshot.data ?? 0) -
+                                    (AppLocation.bearing ?? 0)) *
+                                (pi / 180) *
+                                -1),
+                            child: Column(children: <Widget>[
+                              Icon(QiblaIcons.kaaba,
+                                  color: Colors.black54,
+                                  size:
+                                      ScreenUtil.getInstance().setHeight(100)),
+                              Icon(Icons.arrow_drop_up,
+                                  color: Colors.redAccent,
+                                  size:
+                                      ScreenUtil.getInstance().setHeight(100)),
+                              SizedBox(
+                                  height:
+                                      ScreenUtil.getInstance().setHeight(400))
+                            ]),
+                          ),
+                        ),
+                      ],
+                    );
                   });
             } else
               return Text(
