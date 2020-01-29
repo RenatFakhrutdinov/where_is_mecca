@@ -10,4 +10,5 @@ Features:
 
 • let you know Qibla (the direction to Kaaba)
 
-<img src="https://github.com/RenatFakhrutdinov/where_is_mecca/blob/master/asset/screenshot.png" height=650>
+<img src="https://github.com/RenatFakhrutdinov/where_is_mecca/blob/master/asset/screenshot01.png" height=500>
+<img src="https://github.com/RenatFakhrutdinov/where_is_mecca/blob/master/asset/screenshot02.png" height=500>
