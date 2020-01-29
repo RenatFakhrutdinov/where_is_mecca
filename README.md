@@ -9,3 +9,5 @@ Features:
 • shows the direction to the North
 
 • let you know Qibla (the direction to Kaaba)
+
+<img src="https://github.com/RenatFakhrutdinov/where_is_mecca/blob/master/asset/screenshot.png" height=650>
