@@ -1,6 +1,6 @@
 # where_is_mecca
 
-Find Qibla, wherever you are. This application shows the direction to Mecca.
+Find Qibla, wherever you are. This application shows the direction to Mecca as known as Qibla.
 
 Features:
 
